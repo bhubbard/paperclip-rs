@@ -43,3 +43,5 @@ diagnostics/
 .doc-review-cursor
 .lifecycle-baseline/
 test-results/
+coverage_report
+target/coverage

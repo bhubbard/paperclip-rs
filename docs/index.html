@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>paperclip-rs 📎🦀 Autonomous AI Agent Company Orchestrator in Rust</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📎</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NFEM8TN9ZM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-NFEM8TN9ZM');
+  </script>
+  <style>
+    :root {
+      --bg: #07090e;
+      --card-bg: #0d121d;
+      --card-border: #1a2233;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.15);
+      --text: #e2e8f0;
+      --text-muted: #8b949e;
+      --success: #10b981;
+      --cyan: #38bdf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; width: 100%; }
+    header.nav {
+      border-bottom: 1px solid var(--card-border);
+      padding: 1rem 1.5rem;
+      background: rgba(7, 9, 14, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #fff;
+      text-decoration: none;
+    }
+    .brand-back {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      margin-right: 0.5rem;
+    }
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+    }
+    .badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 2rem;
+    }
+    .cta-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #07090e;
+    }
+    .btn-primary:hover { background: #d97706; }
+    .btn-secondary {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+    }
+    .btn-secondary:hover { border-color: var(--text-muted); color: #fff; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    pre {
+      background: #020408;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      margin: 1.5rem 0;
+    }
+    footer {
+      margin-top: auto;
+      border-top: 1px solid var(--card-border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div style="display:flex; align-items:center;">
+        <a href="https://code.brandonhubbard.com" class="brand-back">&larr; code.brandonhubbard.com</a>
+        <a href="#" class="brand"><span>📎</span> paperclip-rs</a>
+      </div>
+      <a href="https://github.com/bhubbard/paperclip-rs" class="btn btn-secondary" target="_blank" rel="noopener">GitHub ★</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="badge">v0.1.0 • Autonomous AI Companies in Pure Rust</div>
+      <h1>Orchestrate Teams of Autonomous AI Agents</h1>
+      <p>
+        A high-performance, memory-safe Rust control plane for Paperclip. Manage goals, agent hierarchies, budgets, issues, and execution heartbeats with sub-millisecond dispatch.
+      </p>
+      <div class="cta-row">
+        <a href="#quickstart" class="btn btn-primary">Quickstart</a>
+        <a href="https://github.com/bhubbard/paperclip-rs" class="btn btn-secondary" target="_blank" rel="noopener">View Repository</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <div class="card">
+        <h3>⚡ Sub-Millisecond Heartbeats</h3>
+        <p>Dispatches concurrent agent turns, evaluates hierarchical budget caps, and transitions Kanban issue state machines at pure native speeds.</p>
+      </div>
+      <div class="card">
+        <h3>🛡️ Robust Process Supervision</h3>
+        <p>Native process isolation with <code>kill_on_drop</code>, watchdog cancellation tokens, and timeouts for CLI agent runtimes (Claude Code, Codex, AGY, Ollama).</p>
+      </div>
+      <div class="card">
+        <h3>💰 Strict Spend Governance</h3>
+        <p>Enforce HardStop, RequireApproval, and WarnOnly spending rules with human-in-the-loop signoffs to prevent token runaway.</p>
+      </div>
+      <div class="card">
+        <h3>📦 Embedded Single Binary</h3>
+        <p>Compiles into a single standalone static executable (<code>paperclip</code>) containing both the CLI tool and Axum async HTTP control plane.</p>
+      </div>
+    </div>
+
+    <section id="quickstart">
+      <h2 style="font-size:1.8rem; margin-bottom:1rem; color:#fff;">Quickstart</h2>
+      <pre><code># Build standalone binary
+cargo build --release
+
+# Onboard a virtual AI company
+paperclip onboard \
+  --name "Apollo AI" \
+  --mission "Build the leading autonomous software suite" \
+  --budget 100000
+
+# View ASCII Org Chart
+paperclip org
+
+# Dispatch agent execution heartbeat
+paperclip tick --all</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>Crafted by <a href="https://brandonhubbard.com">Brandon Hubbard</a> • <a href="https://code.brandonhubbard.com">code.brandonhubbard.com</a> • MIT / Apache-2.0</p>
+  </footer>
+</body>
+</html>
