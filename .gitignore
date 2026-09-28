@@ -1,5 +1,45 @@
 /target
-.DS_Store
-*.swp
+target/
+Cargo.lock.bk
 **/*.rs.bk
+*.swp
+
+# Dependencies & build
+node_modules/
+**/node_modules/
+dist/
+dist-preview/
+dist-flow-preview/
+ui/dist/
+ui/storybook-static/
+.env
+*.tsbuildinfo
+drizzle/meta/
+.vite/
+coverage/
+
+# OS files
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+
+# Paperclip runtime & local data
+data/
 .paperclip/
+.pnpm-store/
+tmp-*
+cli/tmp/
+tmp/
+feedback-export-*
+diagnostics/
+*.tmp
+.vscode/
+.claude/settings.local.json
+.paperclip-local/
+.paperclip-runtime/
+/.idea/
+/.agents/
+.doc-review-cursor
+.lifecycle-baseline/
+test-results/

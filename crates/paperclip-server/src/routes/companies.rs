@@ -75,3 +75,20 @@ pub async fn get_org_chart(
         "roots": chart.roots,
     })))
 }
+
+pub async fn get_companies_stats(State(state): State<AppState>) -> Json<Value> {
+    let mut stats = serde_json::Map::new();
+    for company in state.storage.list_companies() {
+        let agent_count = state.storage.list_agents(Some(&company.id)).len();
+        let issue_count = state.storage.list_issues(Some(&company.id), None).len();
+        stats.insert(
+            company.id,
+            json!({
+                "agentCount": agent_count,
+                "issueCount": issue_count,
+            }),
+        );
+    }
+    Json(Value::Object(stats))
+}
+

@@ -7,6 +7,9 @@ pub async fn health_check() -> Json<Value> {
         "status": "ok",
         "service": "paperclip-rs",
         "version": env!("CARGO_PKG_VERSION"),
+        "deploymentMode": "local_trusted",
+        "authReady": true,
+        "bootstrapStatus": "ready",
     }))
 }
 

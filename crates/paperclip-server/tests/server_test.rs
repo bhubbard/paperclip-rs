@@ -37,11 +37,50 @@ async fn test_health_and_info_endpoints() {
 
     assert_eq!(response.status(), StatusCode::OK);
 
+    // Test /api/health
+    let response = app
+        .clone()
+        .oneshot(Request::builder().uri("/api/health").body(Body::empty()).unwrap())
+        .await
+        .unwrap();
+    assert_eq!(response.status(), StatusCode::OK);
+
+    // Test /api/companies
+    let response = app
+        .clone()
+        .oneshot(Request::builder().uri("/api/companies").body(Body::empty()).unwrap())
+        .await
+        .unwrap();
+    assert_eq!(response.status(), StatusCode::OK);
+
+    // Test /api/companies/stats
+    let response = app
+        .clone()
+        .oneshot(Request::builder().uri("/api/companies/stats").body(Body::empty()).unwrap())
+        .await
+        .unwrap();
+    assert_eq!(response.status(), StatusCode::OK);
+
     // Test /api/v1/info
     let response = app
+        .clone()
         .oneshot(Request::builder().uri("/api/v1/info").body(Body::empty()).unwrap())
         .await
         .unwrap();
+    assert_eq!(response.status(), StatusCode::OK);
 
+    // Test /legacy-dashboard
+    let response = app
+        .clone()
+        .oneshot(Request::builder().uri("/legacy-dashboard").body(Body::empty()).unwrap())
+        .await
+        .unwrap();
+    assert_eq!(response.status(), StatusCode::OK);
+
+    // Test root UI route /
+    let response = app
+        .oneshot(Request::builder().uri("/").body(Body::empty()).unwrap())
+        .await
+        .unwrap();
     assert_eq!(response.status(), StatusCode::OK);
 }
