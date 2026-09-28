@@ -1,0 +1,39 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/paperclip-core",
+    "crates/paperclip-runner",
+    "crates/paperclip-server",
+    "crates/paperclip-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Brandon Hubbard"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/bhubbard/paperclip-rs"
+homepage = "https://github.com/bhubbard/paperclip-rs"
+readme = "README.md"
+keywords = ["paperclip", "ai-agents", "orchestration", "multi-agent", "governance"]
+categories = ["command-line-utilities", "development-tools"]
+
+[workspace.dependencies]
+paperclip-core = { path = "crates/paperclip-core" }
+paperclip-runner = { path = "crates/paperclip-runner" }
+paperclip-server = { path = "crates/paperclip-server" }
+tokio = { version = "1.40", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "2.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1.10", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4.5", features = ["derive", "env"] }
+axum = "0.8"
+tower = { version = "0.5", features = ["util"] }
+tower-http = { version = "0.6", features = ["cors", "trace"] }
+reqwest = { version = "0.12", features = ["json"] }
+async-trait = "0.1"
+tempfile = "3.17"
