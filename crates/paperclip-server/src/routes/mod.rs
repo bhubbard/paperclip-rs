@@ -18,6 +18,9 @@ use crate::state::AppState;
 
 pub fn build_router(state: AppState) -> Router {
     Router::new()
+        // Dashboard Web App UI
+        .route("/", get(crate::ui::dashboard_html))
+        .route("/dashboard", get(crate::ui::dashboard_html))
         // Health & Info
         .route("/health", get(health::health_check))
         .route("/api/v1/info", get(health::system_info))
