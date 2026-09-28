@@ -104,8 +104,8 @@ export function resourceMembershipState(
   resourceId: string,
 ): ResourceMembershipState {
   const state = resourceType === "project"
-    ? memberships?.projectMemberships[resourceId]
-    : memberships?.agentMemberships[resourceId];
+    ? memberships?.projectMemberships?.[resourceId]
+    : memberships?.agentMemberships?.[resourceId];
   return state === "left" ? "left" : "joined";
 }
 

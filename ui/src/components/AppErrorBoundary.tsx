@@ -3,21 +3,11 @@ import { captureBrowserException } from "@/lib/sentry";
 
 type AppErrorBoundaryState = {
   error: Error | null;
+  componentStack?: string | null;
 };
 
-/**
- * Last-resort boundary above the router and every provider that renders app
- * chrome. `RouteErrorBoundary` only guards the routed `<Outlet />`; a crash in
- * the shell around it (sidebar, providers, layout hooks) has no boundary, so
- * React unmounts the entire root and the user is left staring at a blank
- * page with no way forward but knowing to hard-refresh. This boundary trades
- * that blank page for a reload prompt.
- *
- * Deliberately dependency-free: no router, no toast, no query client — the
- * crash being handled may have originated inside any of those providers.
- */
 export class AppErrorBoundary extends Component<{ children: ReactNode }, AppErrorBoundaryState> {
-  override state: AppErrorBoundaryState = { error: null };
+  override state: AppErrorBoundaryState = { error: null, componentStack: null };
 
   static getDerivedStateFromError(error: unknown): AppErrorBoundaryState {
     return { error: error instanceof Error ? error : new Error(String(error)) };
@@ -25,11 +15,17 @@ export class AppErrorBoundary extends Component<{ children: ReactNode }, AppErro
 
   override componentDidCatch(error: unknown, info: ErrorInfo): void {
     console.error("App shell crashed", { error, componentStack: info.componentStack });
+    this.setState({ componentStack: info.componentStack });
+    (window as any).__lastCrash = {
+      error: String(error),
+      stack: (error as any)?.stack,
+      componentStack: info.componentStack,
+    };
     captureBrowserException(error, { boundary: "app", componentStack: info.componentStack });
   }
 
   override render() {
-    const { error } = this.state;
+    const { error, componentStack } = this.state;
     if (!error) return this.props.children;
 
     return (
@@ -41,7 +37,7 @@ export class AppErrorBoundary extends Component<{ children: ReactNode }, AppErro
           </p>
         </div>
         <pre className="overflow-auto rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive whitespace-pre-wrap">
-          {error.message}
+          {`${(error as any)?.stack || error.message}\n\nComponent Stack:\n${componentStack || "loading component stack..."}`}
         </pre>
         <div>
           <button

@@ -39,7 +39,7 @@ export function useActiveCompanyPrefix(): string | null {
   const pathPrefix = extractCompanyPrefixFromPath(location.pathname);
   if (pathPrefix) return pathPrefix;
 
-  return selectedCompany ? normalizeCompanyPrefix(selectedCompany.issuePrefix) : null;
+  return selectedCompany?.issuePrefix ? normalizeCompanyPrefix(selectedCompany.issuePrefix) : null;
 }
 
 /**

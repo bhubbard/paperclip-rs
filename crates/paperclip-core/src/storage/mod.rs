@@ -34,12 +34,16 @@ impl Storage {
 
     pub fn new_persistent(path: impl AsRef<Path>) -> Result<Self, PaperclipError> {
         let path = path.as_ref().to_path_buf();
-        let snapshot = if path.exists() {
+        let mut snapshot: StorageSnapshot = if path.exists() {
             let data = std::fs::read_to_string(&path)?;
             serde_json::from_str(&data)?
         } else {
             StorageSnapshot::default()
         };
+
+        for company in snapshot.companies.values_mut() {
+            company.normalize_defaults();
+        }
 
         Ok(Self {
             snapshot: RwLock::new(snapshot),
