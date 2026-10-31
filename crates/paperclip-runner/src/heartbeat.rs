@@ -94,7 +94,7 @@ impl HeartbeatDispatcher {
                         issue_id: issue.id.clone(),
                         issue_title: issue.title.clone(),
                         success: false,
-                        summary: format!("Execution blocked: approval required for budget cap"),
+                        summary: "Execution blocked: approval required for budget cap".to_string(),
                         cost_usd: 0.0,
                     });
                     continue;

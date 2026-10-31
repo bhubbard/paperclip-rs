@@ -83,4 +83,27 @@ impl BudgetEnforcer {
             BudgetPolicy::WarnOnly => Ok(None),
         }
     }
+
+    /// Computes the current budget utilization percentage (`0.0..=100.0+`) and estimated
+    /// remaining runway in days given `daily_ticks` and `avg_cost_per_tick_usd`.
+    pub fn compute_runway_days(
+        &self,
+        company: &Company,
+        daily_ticks: u32,
+        avg_cost_per_tick_usd: f64,
+    ) -> (f64, f64) {
+        let utilization_pct = if company.budget_limit_usd > 0.0 {
+            (company.budget_spent_usd / company.budget_limit_usd) * 100.0
+        } else {
+            100.0
+        };
+        let remaining_usd = (company.budget_limit_usd - company.budget_spent_usd).max(0.0);
+        let daily_burn = (daily_ticks as f64) * avg_cost_per_tick_usd.max(0.0);
+        let runway_days = if daily_burn > 1e-9 {
+            remaining_usd / daily_burn
+        } else {
+            f64::INFINITY
+        };
+        (utilization_pct, runway_days)
+    }
 }
